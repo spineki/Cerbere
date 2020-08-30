@@ -1,89 +1,78 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:\programmation\Python\CuteCerbere\interface.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.3
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'interface.ui'
+##
+## Created by: Qt User Interface Compiler version 5.14.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QMetaObject,
+    QObject, QPoint, QRect, QSize, QTime, QUrl, Qt)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+    QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter,
+    QPixmap, QRadialGradient)
+from PySide2.QtWidgets import *
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(590, 96)
-        font = QtGui.QFont()
+        if not MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(438, 97)
+        font = QFont()
         font.setPointSize(10)
         MainWindow.setFont(font)
-        MainWindow.setStyleSheet("background-color:rgb(0, 0, 0);")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.pushButton_silence = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_silence.setGeometry(QtCore.QRect(10, 20, 111, 51))
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        self.pushButton_silence.setFont(font)
-        self.pushButton_silence.setStyleSheet("color: rgb(255, 255, 255);\n"
+        MainWindow.setStyleSheet(u"background-color:rgb(0, 0, 0);")
+        self.centralwidget = QWidget(MainWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.pushButton_silence = QPushButton(self.centralwidget)
+        self.pushButton_silence.setObjectName(u"pushButton_silence")
+        self.pushButton_silence.setGeometry(QRect(10, 20, 111, 51))
+        font1 = QFont()
+        font1.setPointSize(12)
+        self.pushButton_silence.setFont(font1)
+        self.pushButton_silence.setStyleSheet(u"color: rgb(255, 255, 255);\n"
 "background-color: rgb(107, 107, 107);")
-        self.pushButton_silence.setObjectName("pushButton_silence")
-        self.pushButton_changer_touche_son = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_changer_touche_son.setGeometry(QtCore.QRect(340, 20, 111, 51))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.pushButton_changer_touche_son.setFont(font)
-        self.pushButton_changer_touche_son.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(107, 107, 107);")
-        self.pushButton_changer_touche_son.setObjectName("pushButton_changer_touche_son")
-        self.lineEdit_code_touche = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_code_touche.setGeometry(QtCore.QRect(460, 50, 71, 20))
-        self.lineEdit_code_touche.setStyleSheet("color: rgb(255, 255, 255);")
-        self.lineEdit_code_touche.setObjectName("lineEdit_code_touche")
-        self.pushButton_valider = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_valider.setGeometry(QtCore.QRect(540, 50, 41, 21))
-        self.pushButton_valider.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(107, 107, 107);")
-        self.pushButton_valider.setObjectName("pushButton_valider")
-        self.label_musique_en_cours = QtWidgets.QLabel(self.centralwidget)
-        self.label_musique_en_cours.setGeometry(QtCore.QRect(140, 20, 181, 51))
-        font = QtGui.QFont()
-        font.setFamily("Times New Roman")
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setUnderline(True)
-        font.setWeight(50)
-        font.setStrikeOut(False)
-        font.setKerning(False)
-        self.label_musique_en_cours.setFont(font)
-        self.label_musique_en_cours.setStyleSheet("color: rgb(255, 255, 255);")
-        self.label_musique_en_cours.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.label_musique_en_cours = QLabel(self.centralwidget)
+        self.label_musique_en_cours.setObjectName(u"label_musique_en_cours")
+        self.label_musique_en_cours.setGeometry(QRect(140, 20, 181, 51))
+        font2 = QFont()
+        font2.setFamily(u"Times New Roman")
+        font2.setPointSize(10)
+        font2.setBold(False)
+        font2.setUnderline(True)
+        font2.setWeight(50)
+        font2.setStrikeOut(False)
+        font2.setKerning(False)
+        self.label_musique_en_cours.setFont(font2)
+        self.label_musique_en_cours.setStyleSheet(u"color: rgb(255, 255, 255);")
+        self.label_musique_en_cours.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.label_musique_en_cours.setWordWrap(True)
-        self.label_musique_en_cours.setObjectName("label_musique_en_cours")
-        self.label_lancer_essai = QtWidgets.QLabel(self.centralwidget)
-        self.label_lancer_essai.setGeometry(QtCore.QRect(460, 20, 121, 20))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.label_lancer_essai.setFont(font)
-        self.label_lancer_essai.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_lancer_essai.setStyleSheet("color: rgb(255,255,255);")
-        self.label_lancer_essai.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_lancer_essai.setObjectName("label_lancer_essai")
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(340, 0, 71, 71))
+        self.label.setPixmap(QPixmap(u"shiba.png"))
+        self.label.setScaledContents(True)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 590, 21))
-        self.menubar.setObjectName("menubar")
+        self.menubar = QMenuBar(MainWindow)
+        self.menubar.setObjectName(u"menubar")
+        self.menubar.setGeometry(QRect(0, 0, 438, 21))
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
+        self.statusbar = QStatusBar(MainWindow)
+        self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        QMetaObject.connectSlotsByName(MainWindow)
+    # setupUi
 
     def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_silence.setText(_translate("MainWindow", "Silence!"))
-        self.pushButton_changer_touche_son.setText(_translate("MainWindow", "Changer Touche Son"))
-        self.pushButton_valider.setText(_translate("MainWindow", "valider"))
-        self.label_musique_en_cours.setText(_translate("MainWindow", "En attente de bonne musique..."))
-        self.label_lancer_essai.setText(_translate("MainWindow", "code de la touche"))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.pushButton_silence.setText(QCoreApplication.translate("MainWindow", u"Silence!", None))
+        self.label_musique_en_cours.setText(QCoreApplication.translate("MainWindow", u"En attente de bonne musique...", None))
+        self.label.setText("")
+    # retranslateUi
+

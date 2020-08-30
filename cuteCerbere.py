@@ -10,25 +10,15 @@ import sys
 import time
 from threading import Thread  # pour lire l'état courant de spotify
 import win32gui
-try:
-    # pour simuler l'utilisation des touches de son
-    from pynput.keyboard import Key, Controller, Listener, KeyCode
-
-
-except Exception as e:
-    print("bibliothèque pynput manquante, essayez de taper: \n pip install pynput")
-    print(str(e))
 
 
 class mywindow(QtWidgets.QMainWindow):
 
-    last = ""
-    mute = 173
-    keyboard = Controller()
-    dernierTemps = time.clock()
-    pasDeTemps = 1  # s
+    verification_time_step = 1000  # ms
     last_music = ""
     current = ""
+    soundStateOn = True
+
     message = "recherche de spotify..."
 
     def __init__(self):
@@ -38,23 +28,15 @@ class mywindow(QtWidgets.QMainWindow):
 
         # connexion des boutons aux actions
         self.ui.pushButton_silence.clicked.connect(self.flip_sound)
-        self.ui.pushButton_valider.clicked.connect(self.validTouche)
-        self.ui.pushButton_changer_touche_son.clicked.connect(self.paramSon)
 
         # lancement de la tâche périodique
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.update)
-        self.timer.start(1000)
+        self.timer.start(self.verification_time_step)
 
     def update(self):
         # on lance un thread d'analyse de la page spotify
-        # print("analyse...")
-        # Thread(target=self.worker).start()
-        self.worker()
 
-    def worker(self):
-        # print("worker lancé")
-        # ce thread taff en arrière plan
         infos = self.get_info_windows()
         # infos=["une musique", "un musicien talentueux"]
         current = infos[1]
@@ -62,8 +44,7 @@ class mywindow(QtWidgets.QMainWindow):
         if current == "Nothing playing":  # si il y a une pub
             if self.last_music != "Nothing playing":  # si il y avait une musique juste avant
                 # on vient de passer à une pub
-                # self.flip_sound()  # on éteint le son
-                self.setSoundLevel(0.0)
+                self.setSoundLevel(0.0)  # on éteint le son
                 self.last_music = "Nothing playing"  # on note que c'est une pub
             messageAAfficher = "En cours: PUB! argh"
             # si c'est toujours une pub. Bahhh on ne change rien
@@ -71,8 +52,7 @@ class mywindow(QtWidgets.QMainWindow):
         else:
             # si on est sur une musique:
             if self.last_music == "Nothing playing":  # si on avait une pub avant
-                # self.flip_sound()  # on remet le son
-                self.setSoundLevel(1.0)
+                self.setSoundLevel(1.0)  # on remet le son
                 self.last_music = current  # on note la musique actuelle
 
             elif self.last_music != current:  # si l'on vient juste de changer de musique
@@ -83,53 +63,30 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.label_musique_en_cours.setText(messageAAfficher)
 
     def setSoundLevel(self, soundLevel: int):
-        print("setSoundLevel", soundLevel)
         sessions = AudioUtilities.GetAllSessions()
         for session in sessions:
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
 
             if session.Process and session.Process.name() == "Spotify.exe":
-                print("volume.GetMasterVolume(): %s" %
-                      volume.GetMasterVolume())
                 volume.SetMasterVolume(soundLevel, None)
+                if (soundLevel == 0):
+                    self.soundStateOn = False
+                else:
+                    self.soundStateOn = True
 
     def flip_sound(self):
         # print("tentative de couper le son")
         """coupe le son s'il est ouvert, le rouvre s'il est fermé"""
 
-        self.keyboard.press(KeyCode(self.mute))
-        time.sleep(0.05)
-        self.keyboard.release(KeyCode(self.mute))
-
-    def paramSon(self):
-        self.ui.pushButton_changer_touche_son.setText(
-            "Taper sur\nla touche mute")
-        Thread(target=self.ecouteTouche).start()
-
-    def ecouteTouche(self):
-        def on_press(key):
-            if key == Key.enter:
-                self.ui.pushButton_changer_touche_son.setText(
-                    "Changer Touche Son?")
-                return False
-            self.last = str('{0}'.format(key))[1:-1]
-            self.ui.lineEdit_code_touche.setText(self.last)
-
-        with Listener(on_press=on_press) as listener:
-            listener.join()
-
-    def validTouche(self):
-        self.ui.pushButton_changer_touche_son.setText("Changer Touche Son?")
-        temp = self.mute
-        try:
-            self.mute = int(self.ui.lineEdit_code_touche.text())
-        except:
-            self.mute = temp
+        if self.soundStateOn:
+            self.setSoundLevel(0.0)
+        else:
+            self.setSoundLevel(1.0)
 
     def get_info_windows(self):
 
         windows = []
-        # on cherche sur les anciennes version de spotify le titre SpotifyMAinWindow
+        # on cherche sur les anciennes version de spotify le titre SpotifyMainWindow
         windows.append(win32gui.GetWindowText(
             win32gui.FindWindow("SpotifyMainWindow", None)))
 
