@@ -1,3 +1,4 @@
-pynput
 pyside2
 pywin32
+pycaw
+pyinstaller

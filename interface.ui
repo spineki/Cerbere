@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>97</height>
+    <width>420</width>
+    <height>88</height>
    </rect>
   </property>
   <property name="font">
@@ -36,9 +36,13 @@
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cliquez ici pour forcer Cerbère à commuter le volume de Spotify&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(107, 107, 107);</string>
+background-color:rgb(167, 167, 167);
+border-radius: 20;</string>
     </property>
     <property name="text">
      <string>Silence!</string>
@@ -96,18 +100,41 @@ background-color: rgb(107, 107, 107);</string>
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLabel" name="label_spotify_volume">
+    <property name="geometry">
+     <rect>
+      <x>364</x>
+      <y>10</y>
+      <width>31</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rbg(0,0,0,0);</string>
+    </property>
+    <property name="text">
+     <string>100%</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignHCenter|Qt::AlignTop</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>438</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
