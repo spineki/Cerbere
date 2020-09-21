@@ -7,40 +7,50 @@ This project is a hobby, so no help is needed ^^
   <img src="https://raw.githubusercontent.com/spineki/Cerbere/master/app_look.png" />
 </p>
 
-## Who to Get it? 
+## Who to Get it?
 ### Get the files
-- open a terminal and place yourself in a repository where you want to store this programm
+- Open a terminal and place yourself in a repository where you want to store this programm
 
   `cd my/folder/for/this/program`
 - make sure you have installed git, and run
-  `git clone https://github.com/spineki/Cerbere.git` 
-- (I you don't have git, simply click the green upper-right button on this page -> Code -> download zip)
+  `git clone https://github.com/spineki/Cerbere.git`
+- (I you don't have git, simply click the green upper-right button on this page -> Code -> download zip and unzip it in your folder)
 
 ### Install the dependencies
 Go to the newly created folder
   `cd Cerbere`
+  or open your file explorer and open the newly created folder
 
-If you want to keep your python dependencies clean, create a virtualenv (to install virtualenv, `pip install virtualenv`)
+- If you are not familiar with command line, that's fine! Just double click on `install.bat` to install the needed dependencies. A new virtualenv folder named 'venv' will be created in the folder with the needed dependencies, you can go to the next section
+- - I you want to manage the installation by yourself, you can create a virtualenv \
+open a terminal\
+enter the folder `cd Cerbere`\
+`virtualenv venv` then `venv\Scripts\activate` to activate it\
+  - Finally, for virtualenv or classic python installation,\
+    Just type `pip install -r requirements.txt` to install the dependencies.\
+    Eventually, type `pip uninstall enum34` to uninstall this librariy that may harm the code.
 
-`virtualenv venv`
-
-then activate it with
-- for windows `.\venv\Scripts\activate`
-
-Finally, for virtualenv or classic python installation, type `pip install -r requirements.txt`to install all required libraries
 
 ### To run this as a python script:
-`python cuteCerbere.py`
+`python cerbere.py`
 
 ### To build it as an exe file,
+Maybe you don't want to open Python everytime and just be able to double click it like a regular program.
 
-- if you have a venv, `.\venv\Scripts\pyinstaller.exe .\cuteCerbere.py --name Cerbere --windowed --onefile --clean` or just launch venv_build.bat
-- if you don't have a venv, `pyinstaller.exe .\cuteCerbere.py --name Cerbere --windowed --onefile --clean` or just launch build.bat
+
+- if you are not familiar with command line, just double click on `buid.bat`
+- If you want to manage it by yourself,
+  - Activate your virtualenv if you need to,\
+  make sure to have __pyinstaller__ library installed (`pip install pyinstaller`) and then enter\
+  `.\venv\Scripts\pyinstaller.exe .\cerbere.py --name Cerbere --windowed --onefile --clean --add-data "mini_shiba.png;." --add-data "round_button.png;."` or just launch build.bat
+
+
+
 
 Your exe is now in the dist folder. You can place it anywhere you want in your pc and use it as a tradition exe programm.
 
 
-## Who to Use it?
+## How to Use it?
 
 Double click on the exe.The program window will appear:
   - The silence button allows you to toogle the sound (example, spotify had a glitch an the sound is now muted during the musics. Just click on "Silence" button and it will work properly again
@@ -54,7 +64,7 @@ Double click on the exe.The program window will appear:
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/spineki/Cerbere/master/shiba.png" width="200" height="200" />
+  <img src="https://raw.githubusercontent.com/spineki/Cerbere/master/mini_shiba.png" width="200" height="200" />
 </p>
 
 Have Fun!!
