@@ -2,7 +2,8 @@ import tkinter as tk  # Graphics
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume  # manage sound
 import win32gui  # getting spotify windows music title
 
-import sys, os 
+import sys
+import os
 
 
 def resource_path(relative_path):
@@ -12,6 +13,7 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
 
 class App(tk.Frame):
 
@@ -32,9 +34,12 @@ class App(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.setupUi()
-        self.pushButton_silence.config(command=self.flip_sound)
+        self.pushButton_silence.config(command=self.flipSound)
         self.label_current_music.after(
             self.verification_time_step, self.update)
+        # trick to deal with window initialisation problem
+        self.flipSound()
+        self.flipSound()
 
     def setupUi(self):
         # Silence Button
@@ -44,7 +49,8 @@ class App(tk.Frame):
             anchor=tk.NW,  bordermode=tk.INSIDE, x=10, y=20, width=114,  height=51)  # (, , 111, 51)
 
         # Image Dog Button
-        self.button_image = tk.PhotoImage(file=resource_path("round_button.png"))
+        self.button_image = tk.PhotoImage(
+            file=resource_path("round_button.png"))
         self.pushButton_silence = tk.Button(self.parent, text='Button text!', bg='#6b6b6b', fg="#FFFFFF", border="0", font=(
             'arial', 12, 'normal'), image=self.button_image)
         self.pushButton_silence.place(
@@ -57,7 +63,7 @@ class App(tk.Frame):
             anchor=tk.NW, bordermode=tk.INSIDE, x=130, y=20, width=200, height=70)
 
         # Shiba Image
-        self.dog_img = tk.PhotoImage(file=resource_path("mini_shiba.png")) 
+        self.dog_img = tk.PhotoImage(file=resource_path("mini_shiba.png"))
         self.label_image = tk.Label(
             self.parent, image=self.dog_img, bg="#000000")
         self.label_image.place(anchor=tk.NW, bordermode=tk.INSIDE, x=330, y=0)
@@ -71,31 +77,30 @@ class App(tk.Frame):
     def update(self):
         # on lance un thread d'analyse de la page spotify
 
-        infos = self.get_info_windows()
-        # infos=["une musique", "un musicien talentueux"]
+        infos = self.getInfoWindows()
         current = infos[1]
-        messageAAfficher = ""
+        message_to_display = ""
 
-        if current == "Nothing playing":  # si il y a une pub
-            if self.last_music != "Nothing playing":  # si il y avait une musique juste avant
+        if current == "Aucune musique":  # si il y a une pub
+            if self.last_music != "Aucune Musique":  # si il y avait une musique juste avant
                 # on vient de passer à une pub
                 self.setSoundLevel(0.0)  # on éteint le son
                 self.last_music = "Nothing playing"  # on note que c'est une pub
-            messageAAfficher = "En cours: PUB! argh"
+            message_to_display = "En cours: PUB! argh"
             # si c'est toujours une pub. Bahhh on ne change rien
 
         else:
             # si on est sur une musique:
-            if self.last_music == "Nothing playing":  # si on avait une pub avant
+            if self.last_music == "Aucune musique":  # si on avait une pub avant
                 self.setSoundLevel(1.0)  # on remet le son
                 self.last_music = current  # on note la musique actuelle
 
             elif self.last_music != current:  # si l'on vient juste de changer de musique
                 self.last_music = current
 
-            messageAAfficher = "En cours:\n" + infos[1] + "\nde " + infos[0]
+            message_to_display = "En cours:\n" + infos[1] + "\nde " + infos[0]
 
-        self.label_current_music.config(text=messageAAfficher)
+        self.label_current_music.config(text=message_to_display)
         self.label_current_music.after(1000, self.update)
 
     def setSoundLevel(self, soundLevel: int):
@@ -112,7 +117,7 @@ class App(tk.Frame):
                 else:
                     self.soundStateOn = True
 
-    def flip_sound(self):
+    def flipSound(self):
         # print("tentative de couper le son")
         """coupe le son s'il est ouvert, le rouvre s'il est fermé"""
 
@@ -121,7 +126,7 @@ class App(tk.Frame):
         else:
             self.setSoundLevel(1.0)
 
-    def get_info_windows(self):
+    def getInfoWindows(self):
 
         windows = []
         # on cherche sur les anciennes version de spotify le titre SpotifyMainWindow
@@ -130,12 +135,12 @@ class App(tk.Frame):
 
         # sur les versions plus récentes, on
         # on utilise EnumHandler pour EnumWindows puis on vide la liste si besoin
-        def find_spotify_uwp(hwnd, windows):
+        def findSpotifyUwp(hwnd, windows):
             text = win32gui.GetWindowText(hwnd)
             if win32gui.GetClassName(hwnd) == "Chrome_WidgetWin_0" and len(text) > 0:
                 windows.append(text)
 
-        win32gui.EnumWindows(find_spotify_uwp, windows)
+        win32gui.EnumWindows(findSpotifyUwp, windows)
 
         while windows.count != 0:
             try:
@@ -148,13 +153,8 @@ class App(tk.Frame):
             except:
                 pass
 
-    def update_label(self):
-        self.label_percent.configure(cpuTemp)
-        self.root.after(1000, self.update_label)
-
 
 #  ------------------------------------------------------------------------------------------------
-
 
 if __name__ == "__main__":
     root = tk.Tk()
