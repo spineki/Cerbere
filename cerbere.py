@@ -38,8 +38,8 @@ class App(tk.Frame):
         self.label_current_music.after(
             self.verification_time_step, self.update)
         # trick to deal with window initialisation problem
-        self.flipSound()
-        self.flipSound()
+        self.setSoundLevel(0.0)
+        self.setSoundLevel(1.0)
 
     def setupUi(self):
         # Silence Button
@@ -76,27 +76,31 @@ class App(tk.Frame):
 
     def update(self):
         # on lance un thread d'analyse de la page spotify
-
         infos = self.getInfoWindows()
         current = infos[1]
         message_to_display = ""
 
-        if current == "Aucune musique":  # si il y a une pub
-            if self.last_music != "Aucune Musique":  # si il y avait une musique juste avant
+        nothing_playing_keyword = "Nothing playing"
+
+        if current == nothing_playing_keyword:  # si il y a une pub
+            if self.last_music != nothing_playing_keyword:  # si il y avait une musique juste avant
                 # on vient de passer à une pub
                 self.setSoundLevel(0.0)  # on éteint le son
-                self.last_music = "Nothing playing"  # on note que c'est une pub
+                self.last_music = nothing_playing_keyword  # on note que c'est une pub
             message_to_display = "En cours: PUB! argh"
             # si c'est toujours une pub. Bahhh on ne change rien
 
         else:
             # si on est sur une musique:
-            if self.last_music == "Aucune musique":  # si on avait une pub avant
+            if self.last_music == nothing_playing_keyword:  # si on avait une pub avant
                 self.setSoundLevel(1.0)  # on remet le son
                 self.last_music = current  # on note la musique actuelle
 
             elif self.last_music != current:  # si l'on vient juste de changer de musique
                 self.last_music = current
+            else:
+                # we are still in the same musique, nothing to do
+                pass
 
             message_to_display = "En cours:\n" + infos[1] + "\nde " + infos[0]
 
@@ -118,7 +122,6 @@ class App(tk.Frame):
                     self.soundStateOn = True
 
     def flipSound(self):
-        # print("tentative de couper le son")
         """coupe le son s'il est ouvert, le rouvre s'il est fermé"""
 
         if self.soundStateOn:
