@@ -7,7 +7,7 @@ This project is a hobby, so no help is needed ^^
   <img src="https://raw.githubusercontent.com/spineki/Cerbere/master/app_look.png" />
 </p>
 
-## Who to Get it?
+## How to Get it?
 
 ### Download the executable
 This is the simplest way. Go to the right, `Release` section, choose the newest version and download the exectuable. Double click it and it works!
