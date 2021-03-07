@@ -199,7 +199,6 @@ class App(tk.Frame):
         for window in windowList:
             if window["kCGWindowOwnerName"] == "Spotify":
                 (error_code, current_track, other) = osascript.run("""tell application "Spotify" \n set c to current track \n return {(artist of c), (album of c)} \n end tell""")
-                print("|" + current_track + "|")
                 if current_track == ",":
                     return ("Error", "Nothing playing")
                 else:
