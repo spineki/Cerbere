@@ -1,2 +1,4 @@
-pywin32
-pycaw
+pywin32; platform_system == "Windows"
+pycaw; platform_system == "Windows"
+PyObjC; platform_system == "Darwin"
+osascript; platform_system == "Darwin"

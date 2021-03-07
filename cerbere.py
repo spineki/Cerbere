@@ -1,9 +1,21 @@
-import tkinter as tk  # Graphics
-from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume  # manage sound
-import win32gui  # getting spotify windows music title
-
-import sys
 import os
+import sys
+import tkinter as tk
+import osascript  # Graphics
+
+
+if sys.platform  == "win32":
+    import win32gui  # getting spotify windows music title
+    from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume  # manage sound
+if sys.platform == "darwin":
+    import osascript
+    from AppKit import NSApp, NSWorkspace
+    from Quartz import (
+        CGWindowListCopyWindowInfo,
+        kCGWindowListOptionOnScreenOnly,
+        kCGNullWindowID,
+        kCGWindowListOptionAll
+    )
 
 
 def resource_path(relative_path):
@@ -108,6 +120,12 @@ class App(tk.Frame):
         self.label_current_music.after(1000, self.update)
 
     def setSoundLevel(self, soundLevel: int):
+        if sys.platform == "win32":
+            self.setSoundLevelWindows(soundLevel)
+        if sys.platform == "darwin":
+            self.setSoundLevelDarwin(soundLevel)
+ 
+    def setSoundLevelWindows(self, soundLevel: int):
         sessions = AudioUtilities.GetAllSessions()
         for session in sessions:
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
@@ -121,6 +139,16 @@ class App(tk.Frame):
                 else:
                     self.soundStateOn = True
 
+    def setSoundLevelDarwin(self, soundLevel: int):
+        self.label_percent.config(text=str(int(20 * soundLevel)) + "%")
+
+        osascript.run("set volume output volume " + str(int(20 * soundLevel)))
+
+        if (soundLevel == 0):
+            self.soundStateOn = False
+        else:
+            self.soundStateOn = True
+
     def flipSound(self):
         """coupe le son s'il est ouvert, le rouvre s'il est fermé"""
 
@@ -130,6 +158,12 @@ class App(tk.Frame):
             self.setSoundLevel(1.0)
 
     def getInfoWindows(self):
+        if sys.platform == "win32":
+            return self.getInfoWindowsWindows()
+        if sys.platform == "darwin":
+            return self.getInfoWindowsDarwin()
+
+    def getInfoWindowsWindows(self):
 
         windows = []
         # on cherche sur les anciennes version de spotify le titre SpotifyMainWindow
@@ -155,6 +189,27 @@ class App(tk.Frame):
                 return artist, track
             except:
                 pass
+
+    def getInfoWindowsDarwin(self):
+        # on cherche sur les anciennes version de spotify le titre Spotify
+        options = kCGWindowListOptionAll
+        windowList = CGWindowListCopyWindowInfo(options, kCGNullWindowID)
+        #result = osascript.run("""set appName to "Spotify" \n if application appName is running then \n tell application "Spotify" \n set c to current track \n return {(artist of c), (album of c)} \n end tell \n else \n return "not running" \n end if""")
+
+        for window in windowList:
+            if window["kCGWindowOwnerName"] == "Spotify":
+                (error_code, current_track, other) = osascript.run("""tell application "Spotify" \n set c to current track \n return {(artist of c), (album of c)} \n end tell""")
+                print("|" + current_track + "|")
+                if current_track == ",":
+                    return ("Error", "Nothing playing")
+                else:
+                    try:
+                        artist, track = current_track.split(",", 1)
+                        return (artist.strip(), track.strip())
+                    except Exception as e:
+                        return ("Error", "Nothing playing")
+        
+
 
 
 #  ------------------------------------------------------------------------------------------------
