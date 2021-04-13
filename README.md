@@ -42,7 +42,7 @@ enter the folder `cd Cerbere`\
 Maybe you don't want to open Python everytime and just be able to double click it like a regular program.
 
 
-- if you are not familiar with command line, just double click on `buid.bat`
+- if you are not familiar with command line, just double click on `build.bat`
 - If you want to manage it by yourself,
   - Activate your virtualenv if you need to,\
   make sure to have __pyinstaller__ library installed (`pip install pyinstaller`) and then enter\
@@ -57,8 +57,8 @@ Your exe is now in the dist folder. You can place it anywhere you want in your p
 ## How to Use it?
 
 Double click on the exe.The program window will appear:
-  - The silence button allows you to toogle the sound (example, spotify had a glitch an the sound is now muted during the musics. Just click on "Silence" button and it will work properly again
-  - The percentage: It's the percentage of the volume allowed to spotify: 100% = sound up, 0%= sound down
+  - The silence button allows you to toogle the sound (example, spotify had a glitch and the sound is now muted during the musics. Just click on "Silence" button and it will work properly again
+  - The percentage: It's the percentage of the volume allowed to spotify: 100% = sound up, 0%= sound down (limited to 20% on mac to avoid detroying ears!)
   - A text at the center showing that there is an ad ("pub", in french) or the music and artist name.
 
 
