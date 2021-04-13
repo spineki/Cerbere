@@ -1,6 +1,6 @@
 # Cerbere
 
-A little tool to mute spotify sound On windows when an ad replaces the music. Uses python 3.
+A little tool to mute spotify sound when an ad replaces the music. Uses python 3.
 This project is a hobby, so no help is needed ^^
 
 <p align="center">
